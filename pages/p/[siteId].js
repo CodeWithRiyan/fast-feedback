@@ -10,7 +10,6 @@ import { getAllFeedback, getAllSites } from '@/lib/db-admin';
 export async function getStaticProps(context) {
   const siteId = context.params.siteId;
   const { feedback } = await getAllFeedback(siteId);
-
   return {
     props: {
       initialFeedback: feedback
@@ -20,15 +19,12 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  let sites = [];
-  const allData = await getAllSites();
-  sites = allData.sites;
-  const paths = sites.map((site) => ({
+  const { sites } = await getAllSites();
+  const paths = sites?.map((site) => ({
     params: {
       siteId: site.id.toString()
     }
   }));
-
   return {
     paths,
     fallback: false
