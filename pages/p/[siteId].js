@@ -15,19 +15,22 @@ export async function getStaticProps(context) {
     props: {
       initialFeedback: feedback
     },
-    unstable_revalidate: 1
+    revalidate: 1
   };
 }
 
 export async function getStaticPaths() {
-  const { sites } = await getAllSites();
+  let sites = [];
+  const allData = await getAllSites();
+  sites = allData.sites;
+  const paths = sites.map((site) => ({
+    params: {
+      siteId: site.id.toString()
+    }
+  }));
 
   return {
-    paths: sites.map((site) => ({
-      params: {
-        siteId: site.id.toString()
-      }
-    })),
+    paths,
     fallback: false
   };
 }
