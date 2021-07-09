@@ -25,6 +25,7 @@ export async function getStaticPaths() {
       siteId: site.id.toString()
     }
   }));
+  console.log(paths);
   return {
     paths,
     fallback: false
